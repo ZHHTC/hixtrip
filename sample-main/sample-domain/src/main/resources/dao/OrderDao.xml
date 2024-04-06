@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hixtrip.sample.domain.order.mapper.OrderDao">
+
+    <insert id="save">
+        insert into order (id,money,delflag,createby,createtime)
+        values
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{roleId,jdbcType=DECIMAL},
+            </if>
+            <if test="delflag != null">
+                #{delflag,jdbcType=BIGINT},
+            </if>
+            <if test="createby != null and createby != ''">
+                #{createby,jdbcType=DECIMAL},
+            </if>
+            <if test="createtime != null">
+                #{roleId,jdbcType=DATETIME},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectById" resultType="com.hixtrip.sample.domain.order.model.Order">
+        select * from order
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateOrder">
+        update order
+        <set>
+            <if test="paystatus != null and paystatus != ''">
+                paystatus = #{payStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="paytime != null">
+                paytime = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+            where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>
